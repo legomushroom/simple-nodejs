@@ -20,6 +20,7 @@ const iface = new tunfd.TunInterface({
 console.log('starting the connection');
 try {
     const socket = io(`${SOCKET_SERVER_URL}/tap-rooms?userId=uid&networkId=nid&address=${ADDRESS}`);
+    socket.binaryType = 'arraybuffer';
     socket.on('connect', () => {
         console.log('>> connect');
 
@@ -27,22 +28,22 @@ try {
         const writeStream = fs.createWriteStream(null, { fd: iface.fd });
 
         readStream.on('data', (packet) => {
+            console.log(`>> data from tun interface: ${typeof packet}`, packet);
             socket.send(packet);
         });
 
-        socket.on('event', (data) => {
+        socket.on('message', (data) => {
+            console.log(`>> data from socket: ${typeof data}`, data);
             writeStream.write(data);
         });
 
         socket.on('disconnect', (data) => {
             console.log('>> disconnect');
-
         });
     });
 } catch (e) {
     trace.error(e);
 }
-
 
 // prevent nodejs from stopping
 setInterval(() => {}, 100);
