@@ -17,24 +17,26 @@ export class SocketConnectionRecord extends DisposableClass {
 
         socket.join(roomId);
 
-        socket.on('event', this.onEvent);
+        socket.on('message', this.onMessage);
         socket.on('disconnect', this.dispose.bind(this));
     }
 
-    private onEvent = (data: any) => {
+    private onMessage = (data: any) => {
+        this.trace.info(`on message: ${typeof data}`, data);
+
         if (this.isDisposed) {
             this.trace.warn('data received but the connection record is disposed', this.options);
         }
 
-        this.trace.verbose(`data received, broadcasting to the room "${this.roomId}"`);
+        this.trace.verbose(`data received (${typeof data}), broadcasting to the room "${this.roomId}"`);
 
-        this.socket.to(this.roomId).emit(data);
+        this.socket.to(this.roomId).emit('message', data);
     };
 
     public dispose(reason?: string) {
-        this.trace.verbose(`disposing connection record "", reason: "${reason}"`, this.options);
+        this.trace.verbose(`disposing connection record "${this.id}", reason: "${reason}"`, this.options);
 
-        this.socket.off('event', this.onEvent);
+        this.socket.off('event', this.onMessage);
 
         super.dispose();
         this.socket.leave(this.roomId);

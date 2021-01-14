@@ -34,10 +34,6 @@ export class SocketConnectionManager extends DisposableClass {
             options
         );
 
-        record.onDispose(() => {
-            this.connections.delete(record.id);
-        });
-
         this.addToDisposables(
             record,
             record.onDispose(() => {

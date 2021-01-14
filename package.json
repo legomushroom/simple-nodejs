@@ -7,6 +7,7 @@
   "license": "MIT",
   "scripts": {
     "dev": "yarn compile && run p compile:watch start:watch",
+    "start": "yarn compile && node ./dist/app.js",
     "start:watch": "nodemon ./dist/app.js",
     "compile": "tsc",
     "compile:watch": "tsc -w"

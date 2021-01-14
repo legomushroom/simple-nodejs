@@ -29,6 +29,15 @@ server
 
 server.listen(SOCKET_PORT);
 
-// // client for tests
+// const SOCKET_SERVER_URL = 'wss://85e9e5b54f61.ngrok.io';
+
 // import io from 'socket.io-client';
-// const socket = io(`ws://localhost:${SOCKET_PORT}/tap-rooms?userId=uid&networkId=nid&address=10.0.0.1`);
+
+// setTimeout(() => {
+//     trace.info('starting the connection');
+//     try {
+//         const socket = io(`${SOCKET_SERVER_URL}/tap-rooms?userId=uid&networkId=nid&address=10.0.0.1`);
+//     } catch (e) {
+//         trace.error(e);
+//     }
+// }, 2000);
