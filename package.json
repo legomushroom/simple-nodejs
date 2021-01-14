@@ -1,8 +1,12 @@
 {
-  "name": "simple-nodejs",
+  "name": "tuntap",
   "version": "0.1.0",
   "main": "index.js",
-  "repository": "https://github.com/legomushroom/simple-nodejs",
-  "author": "Oleg Solomka <olsolomk@microsoft.com>",
-  "license": "MIT"
+  "author": "Oleg Solomka <legomushroom@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.17.1",
+    "nodemon": "^2.0.7",
+    "tunfd": "^0.1.0"
+  }
 }
