@@ -8,7 +8,7 @@
   "scripts": {
     "dev": "yarn compile && run p compile:watch start:watch",
     "start:watch": "nodemon ./dist/app.js",
-    "compile": "tsc -w",
+    "compile": "tsc",
     "compile:watch": "tsc -w"
   },
   "dependencies": {

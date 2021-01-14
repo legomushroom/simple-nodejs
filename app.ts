@@ -2,6 +2,7 @@ import * as SocketIO from 'socket.io';
 import { getConnectionOptions } from './src/utils/getConnectionOptions';
 import { SocketConnectionManager } from './src/connection/SocketConnectionManager';
 import { createTrace } from './src/utils/createTrace';
+
 const trace = createTrace('app');
 
 const SOCKET_PORT = 3000;
@@ -13,7 +14,7 @@ server
     .on('connection', (socket: SocketIO.Socket) => {
         const { handshake } = socket;
 
-        console.log('someone connected', handshake.url);
+        trace.info('someone connected', handshake.url);
 
         try {
             connectionManager.connect(
@@ -24,10 +25,10 @@ server
             trace.error(e);
             socket.disconnect(true);
         }
-    });
+    })
 
-    server.listen(SOCKET_PORT);
+server.listen(SOCKET_PORT);
 
-// client for tests
-import io from 'socket.io-client';
-const socket = io(`ws://localhost:${SOCKET_PORT}/tap-rooms?userId=uid&networkId=nid&address=10.0.0.1`);
+// // client for tests
+// import io from 'socket.io-client';
+// const socket = io(`ws://localhost:${SOCKET_PORT}/tap-rooms?userId=uid&networkId=nid&address=10.0.0.1`);
