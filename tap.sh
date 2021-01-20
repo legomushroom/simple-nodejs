@@ -28,7 +28,7 @@ ifconfig
 
 echo -e "\nadding tap to bridge"
 
-ip lin set $TAP_NAME up
+ip link set $TAP_NAME up
 
 brctl addif $BRIDGE_NAME $TAP_NAME
 
