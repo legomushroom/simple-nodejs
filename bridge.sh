@@ -23,7 +23,7 @@ echo "adding tap interface \"$tap\""
 
 ip tuntap add mode tap $tap
 
-echo "adding bridge"
+echo "adding bridge $br"
 
 # add tap interface
 # ip addr add $NETWORK_ADDRESS dev $tap
@@ -35,16 +35,24 @@ echo "adding bridge"
 # done
 
 brctl addbr $br
+
+echo "setting up bridge ip and mask ip: $eth_ip mask: $eth_netmask broadcase:  $eth_broadcast"
+ifconfig $br $eth_ip netmask $eth_netmask broadcast $eth_broadcast
+
+echo "adding interface $eth to $br"
+
 brctl addif $br $eth
 
 for t in $tap; do
+    echo "adding interface $t to $br"
     brctl addif $br $t
 done
 
 for t in $tap; do
+    echo "rise the interface $t in promiscous mode"
     ifconfig $t 0.0.0.0 promisc up
 done
 
-ifconfig $eth 0.0.0.0 promisc up
+# echo "rise the interface $t in promiscous mode"
+# ifconfig $eth 0.0.0.0 promisc up
 
-ifconfig $br $eth_ip netmask $eth_netmask broadcast $eth_broadcast
