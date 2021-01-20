@@ -19,7 +19,7 @@ const iface = new tunfd.TunInterface({
 
 console.log('starting the connection');
 try {
-    const socket = io(`${SOCKET_SERVER_URL}/tap-rooms?userId=uid&networkId=nid&address=2`);
+    const socket = io(`${SOCKET_SERVER_URL}/tap-rooms?userId=uid&networkId=nid&address=1`);
     socket.binaryType = 'arraybuffer';
     socket.on('connect', () => {
         console.log('>> connect');

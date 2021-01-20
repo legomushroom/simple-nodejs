@@ -16,10 +16,10 @@ echo "adding tap interface \"$tap\""
 
 ip tuntap add mode tap $tap
 
-for t in $tap; do
-    echo "adding interface $t to $br"
-    brctl addif $br $t
-done
+# for t in $tap; do
+#     echo "adding interface $t to $br"
+#     brctl addif $br $t
+# done
 
 for t in $tap; do
     echo "rise the interface $t in promiscous mode"
