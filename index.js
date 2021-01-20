@@ -4,7 +4,7 @@ const io = require('socket.io-client');
 
 const SOCKET_SERVER_URL = 'wss://85e9e5b54f61.ngrok.io';
 const TUN_NUMBER = 0;
-const ADDRESS = '10.0.0.1'
+const ADDRESS = '10.0.0.2'
 
 const iface = new tunfd.TunInterface({
   // optional, kernel will automatically assign a name if not given here
@@ -20,6 +20,7 @@ const iface = new tunfd.TunInterface({
 console.log('starting the connection');
 try {
     const socket = io(`${SOCKET_SERVER_URL}/tap-rooms?userId=uid&networkId=nid&address=${ADDRESS}`);
+    socket.binaryType = 'arraybuffer';
     socket.on('connect', () => {
         console.log('>> connect');
 
@@ -27,22 +28,22 @@ try {
         const writeStream = fs.createWriteStream(null, { fd: iface.fd });
 
         readStream.on('data', (packet) => {
+            console.log(`>> data from tun interface: ${typeof packet}`, packet);
             socket.send(packet);
         });
 
-        socket.on('event', (data) => {
+        socket.on('message', (data) => {
+            console.log(`>> data from socket: ${typeof data}`, data);
             writeStream.write(data);
         });
 
         socket.on('disconnect', (data) => {
             console.log('>> disconnect');
-
         });
     });
 } catch (e) {
     trace.error(e);
 }
-
 
 // prevent nodejs from stopping
 setInterval(() => {}, 100);
