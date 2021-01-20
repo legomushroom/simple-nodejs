@@ -4,10 +4,11 @@ const io = require('socket.io-client');
 
 const SOCKET_SERVER_URL = 'wss://85f65e79a16a.ngrok.io';
 const TUN_NUMBER = 0;
+// const ADDRESS = '10.0.0.2'
 
 const iface = new tunfd.TunInterface({
   // optional, kernel will automatically assign a name if not given here
-  name: `cstap1`,
+  name: `cstap${TUN_NUMBER}`,
   // can be either "tun" or "tap", default is "tun"
   // tun mode gets you ip packets, tap mode gets you ethernet frames
   mode: 'tap',
