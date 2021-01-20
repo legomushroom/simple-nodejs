@@ -2,16 +2,16 @@ const tunfd = require('tunfd');
 const fs = require('fs');
 const io = require('socket.io-client');
 
-const SOCKET_SERVER_URL = 'wss://85e9e5b54f61.ngrok.io';
+const SOCKET_SERVER_URL = 'wss://85f65e79a16a.ngrok.io';
 const TUN_NUMBER = 0;
-const ADDRESS = '10.0.0.2'
+// const ADDRESS = '10.0.0.2'
 
 const iface = new tunfd.TunInterface({
   // optional, kernel will automatically assign a name if not given here
-  name: `tun${TUN_NUMBER}`,
+  name: `cstap${TUN_NUMBER}`,
   // can be either "tun" or "tap", default is "tun"
   // tun mode gets you ip packets, tap mode gets you ethernet frames
-  mode: 'tun',
+  mode: 'tap',
   // set to true if you want the 4-byte packet information header
   // default is false, which adds IFF_NO_PI to ifr_flags
   pi: false,
@@ -19,7 +19,7 @@ const iface = new tunfd.TunInterface({
 
 console.log('starting the connection');
 try {
-    const socket = io(`${SOCKET_SERVER_URL}/tap-rooms?userId=uid&networkId=nid&address=${ADDRESS}`);
+    const socket = io(`${SOCKET_SERVER_URL}/tap-rooms?userId=uid`);
     socket.binaryType = 'arraybuffer';
     socket.on('connect', () => {
         console.log('>> connect');
