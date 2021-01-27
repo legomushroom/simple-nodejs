@@ -2,7 +2,7 @@ const tunfd = require('tunfd');
 const fs = require('fs');
 const io = require('socket.io-client');
 
-const SOCKET_SERVER_URL = 'wss://e7c8e6cb87e0.ngrok.io';
+const SOCKET_SERVER_URL = 'wss://a0c38646ac7c.ngrok.io';
 const TUN_NUMBER = 0;
 // const ADDRESS = '10.0.0.2'
 
